@@ -1,7 +1,7 @@
 package LeetCode.snapChat;
 
-import BinaryTree.Codec;
-import BinaryTree.TreeNode;
+import LeetCode.BinaryTree.Codec;
+import LeetCode.BinaryTree.TreeNode;
 import com.sun.org.apache.bcel.internal.classfile.Code;
 import sun.reflect.generics.tree.Tree;
 

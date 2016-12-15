@@ -1,7 +1,7 @@
 package LeetCode.design;
 
-import BinaryTree.Codec;
-import BinaryTree.TreeNode;
+import LeetCode.BinaryTree.Codec;
+import LeetCode.BinaryTree.TreeNode;
 import sun.reflect.generics.tree.Tree;
 
 import java.util.NoSuchElementException;

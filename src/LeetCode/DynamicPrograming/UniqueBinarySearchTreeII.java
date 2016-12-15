@@ -1,6 +1,6 @@
 package LeetCode.DynamicPrograming;
 
-import BinaryTree.TreeNode;
+import LeetCode.BinaryTree.TreeNode;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
