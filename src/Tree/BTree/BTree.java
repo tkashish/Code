@@ -2,33 +2,29 @@ package Tree.BTree;
 
 import Tree.Tree;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * Created by kashishtayal on 12/13/16.
  */
 public class BTree<T extends Comparable<T>> implements Tree<T> {
-    NodeImplNotGood _root = new NodeImplNotGood();
-    private final int MINIMUM;
-    private final int MAXIMUM;
-    public BTree(){
-        MINIMUM = 2;
-        MAXIMUM = 2*MINIMUM;
-    }
+    NodeImpl _root;
     public BTree(int inMin){
-        MINIMUM = inMin;
-        MAXIMUM = 2*MINIMUM;
+        _root = new NodeImpl(inMin);
     }
 
     @Override
     public void add(T inValue) {
         _root.add(inValue);
-        if(_root._prevLevel != null){
-            _root = _root._prevLevel;
+        if(_root.getParent() != null){
+            _root = _root.getParent();
         }
     }
 
     @Override
     public boolean contains(T inValue) {
-        return _root.find(inValue) != null;
+        return _root.contains(inValue);
     }
 
     @Override
@@ -36,35 +32,53 @@ public class BTree<T extends Comparable<T>> implements Tree<T> {
         return false;
     }
 
-
-
-
-
-    public static void main(String[] args) {
-        BTree<Integer> bTree = new BTree<Integer>(1);
-//        bTree.add(1);
-//        bTree.add(2);
-//        bTree.add(3);
-//        bTree.add(4);
-//        bTree.add(5);
-//        System.out.println(bTree.contains(1));
-//        System.out.println(bTree.contains(2));
-//        System.out.println(bTree.contains(3));
-//        System.out.println(bTree.contains(4));
-//        System.out.println(bTree.contains(5));
-        long start = System.currentTimeMillis();
-        for(int i = 10; i < 15; i++){
-            bTree.add(i);
+    public int height(){
+        int result = 0;
+        NodeImpl node = _root;
+        while(node != null){
+            result++;
+            node = node.getKeys()[0]._nextLevelLeft;
         }
-        for (int i = 5; i < 10; i++) {
-            bTree.add(i);
+        return result;
+    }
+
+    public void printBfs(){
+        Queue<NodeImpl> queue = new LinkedList<>();
+        NodeImpl node = _root;
+        queue.add(node);
+        queue.add(null);
+        System.out.print("[");
+        while(!queue.isEmpty()){
+            NodeImpl key = queue.remove();
+            if(key == null){
+                System.out.println("]");
+                System.out.print("[");
+            }else{
+                if(key.getMINIMUM() == 0){
+                    System.out.println("]");
+                    System.out.print("[");
+                    continue;
+                }
+                System.out.print(key.toString());
+                addToQueue(key, queue);
+                addToQueue(key, queue);
+            }
         }
-        for (int i = 5; i < 15; i++) {
-            boolean find = bTree.contains(i);
-            if(find != true) System.out.println(i+" not found");
+    }
+    private void addToQueue(NodeImpl node, Queue<NodeImpl> queue){
+        if(node == null) return;
+        NodeImpl.Entry[] keys = node.getKeys();
+        NodeImpl.Entry lastEntry = null;
+        for(int i = 0; i < keys.length-1; i++){
+            if(keys[i+1] == null){
+                lastEntry = keys[i];
+                break;
+            }
+            if(keys[i] == null) break;
+            queue.add(keys[i]._nextLevelLeft);
         }
-        long end = System.currentTimeMillis();
-        System.out.println(end-start);
+        queue.add(lastEntry._nextLevelRight);
+        queue.add(new NodeImpl(0));
     }
 }
 
