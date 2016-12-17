@@ -18,13 +18,12 @@ public class Main {
 //        }
 //        System.out.println(j + "  " + (System.currentTimeMillis() - start));
 //        System.out.println(tree.height());
-        BTree<Integer> tree = new BTree<>(2);
-        tree.add(1);
-        tree.add(1);
-        tree.add(1);
-        tree.add(1);
-        tree.add(1);
-        tree.add(1);
-        tree.add(1);
+        BTree<Integer> tree = new BTree<>(1);
+        for(int i = 0; i < 5; i++){
+            for(int j = 0; j < 5; j++){
+                tree.add(i);
+            }
+        }
+        System.out.println(tree.isNodeAddedTwice());
     }
 }

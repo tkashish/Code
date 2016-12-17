@@ -31,7 +31,7 @@ public class NodeImpl<T extends Comparable<T>>{
                 int comp = curr._value.compareTo(inValue);
                 if(comp < 0){
                     left = curr;
-                }else if(comp > 0){
+                }else if(comp >= 0){
                     right = curr;
                     break;
                 }
@@ -121,13 +121,13 @@ public class NodeImpl<T extends Comparable<T>>{
         return MINIMUM;
     }
 
-    @Override
-    public String toString() {
+    public String getString() {
         String result = "";
+        Entry lastEntry = null;
         for(int i = 0; i < keys.length; i++){
             if(keys[i] == null)break;
-            if(keys[i]._value == null) break;
-            result = result.concat(String.valueOf(keys[i]._value)+",");
+            lastEntry = keys[i];
+            result = result.concat(String.valueOf(lastEntry._value)+",");
         }
         return result;
     }
@@ -152,7 +152,7 @@ public class NodeImpl<T extends Comparable<T>>{
             int comp = curr._value.compareTo(inValue);
             if(comp < 0){
                 left = curr;
-            }else if(comp > 0){
+            }else if(comp >= 0){
                 right = curr;
                 break;
             }
