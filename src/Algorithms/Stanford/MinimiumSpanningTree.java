@@ -14,7 +14,7 @@ public class MinimiumSpanningTree {
         init(inFileName);
     }
     private void init(String inFileName){
-        URL path = MinimiumSpanningTree.class.getResource(inFileName);
+        URL path = MinimiumSpanningTree.class.getClassLoader().getResource(inFileName);
         try {
             List<String> lines = FIleReaderUtils.fileReader(path);
             for(int i = 1; i < lines.size(); i++){

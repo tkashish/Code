@@ -26,7 +26,7 @@ public class UnionFind {
         init(inFileName);
     }
     private void init(String inFileName){
-        URL path = UnionFind.class.getResource(inFileName);
+        URL path = UnionFind.class.getClassLoader().getResource(inFileName);
         try {
             List<String> lines = FIleReaderUtils.fileReader(path);
             for(int i = 1; i < lines.size(); i++){
