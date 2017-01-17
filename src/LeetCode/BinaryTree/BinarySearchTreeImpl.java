@@ -36,7 +36,8 @@ public class BinarySearchTreeImpl implements IBinaryTree{
         final TreeNode parentNode = findParentMaybeNull(inKey);
         if(parentNode == null){
             if(_root.val == inKey){
-                _root = null;
+                TreeNode replacement = replaceNodeToDelete(_root);
+                _root = replacement;
             }
         }else{
             if(parentNode.val > inKey){
