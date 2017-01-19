@@ -69,8 +69,10 @@ public class CountOfSmallerNumbersAfterSelf {
     }
 
     public List<Integer> countSmallerI(int[] nums) {
-        Nodee head = new Nodee(nums[0]);
+        if(nums.length == 0) return new ArrayList<>();
+        Nodee head = new Nodee(nums[nums.length-1]);
         Integer[] result = new Integer[nums.length];
+        result[nums.length-1] = 0;
         for(int i = nums.length-2; i > -1; i--){
             Nodee nodee = new Nodee(nums[i]);
             Nodee curr = head;
