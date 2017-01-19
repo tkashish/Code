@@ -1,4 +1,4 @@
-package LeetCode;
+package LeetCode.DivideAndConquer;
 
 /**
  * Created by kashishtayal on 1/17/17.
