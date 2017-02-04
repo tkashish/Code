@@ -1,26 +1,27 @@
-package MapReduce.main;
-
-import MapReduce.main.threadnode.MyThreadFactory;
+package MapReduce.connection;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
 /**
- * Created by kashishtayal on 1/27/17.
+ * Created by kashishtayal on 2/4/17.
  */
-public class Node{
+public class Node implements AutoCloseable{
+
     private ExecutorService _executor;
-    private Node(){
-    }
-    public static Node getThreadNode(String inNodeName){
-        Node node = new Node();
+
+    public Node(String inNodeName) {
         ThreadFactory threadFactory = new MyThreadFactory(inNodeName);
-        node._executor = Executors.newSingleThreadExecutor(threadFactory);
-        return node;
+        _executor = Executors.newSingleThreadExecutor(threadFactory);
     }
+
     public void startThreadNode(Runnable inRunner){
         _executor.submit(inRunner);
+    }
+
+    @Override
+    public void close() throws Exception {
         _executor.shutdown();
     }
 }

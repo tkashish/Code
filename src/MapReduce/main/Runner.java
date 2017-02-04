@@ -11,7 +11,8 @@ public class Runner {
         ITask mapTask = null;
         ITask reduceTask = null;
         URL dataPath = null;
-        MapReduceService service = new MapReduceService(mapTask, reduceTask, dataPath);
+        ClusterType type = ClusterType.SOCKET;
+        MapReduceService service = new MapReduceService(mapTask, reduceTask, dataPath, type);
         service.startMapReduce();
     }
 }

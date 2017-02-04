@@ -1,4 +1,4 @@
-package MapReduce.main.threadnode;
+package MapReduce.connection;
 
 import java.util.concurrent.ThreadFactory;
 

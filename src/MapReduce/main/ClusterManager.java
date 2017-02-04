@@ -1,52 +1,59 @@
 package MapReduce.main;
 
-import MapReduce.main.threadnode.MasterRunnable;
+import MapReduce.connection.ConnectionFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Created by kashishtayal on 1/27/17.
  */
 public class ClusterManager {
-    private final Logger logger = Logger.getLogger(this.getClass().getName());
-    private Node _masterNode;
-    private static final String MASTER_NODE = "MASTER_NODE";
+    private static final Logger LOGGER = LogManager.getRootLogger();
     private JobContext _jobContext;
-    private Properties _masterServerProperties;
-    public ClusterManager(JobContext inJobContext){
+    private String _masterHostName;
+    private int _masterPortNumber;
+    private final ClusterType _clusterType;
+    public ClusterManager(JobContext inJobContext, ClusterType inType){
+
         _jobContext = inJobContext;
+        _clusterType = inType;
         try {
             readMasterServerInfo();
             readWorkerServerInfo();
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "unable to read serverinfo" + e);
+            LOGGER.error("unable to read serverinfo" + e);
         }
     }
 
-    public String startMasterNode(){
-        logger.log(Level.INFO, "startMasterNode");
-        String hostName = null;
-        int portNumber = Integer.MIN_VALUE;
-        String masterServerInfoString = null;
-        for(Object keys : _masterServerProperties.keySet()){
-            masterServerInfoString = (String)_masterServerProperties.get(keys);
-            String[] values = masterServerInfoString.split(":");
-            portNumber = Integer.parseInt(values[1]);
-        }
-        Node node = Node.getThreadNode(MASTER_NODE);
-        Runnable runnable = new MasterRunnable(portNumber,_jobContext);
-        node.startThreadNode(runnable);
-        return masterServerInfoString;
+    public void startMasterNode() throws Exception {
+        LOGGER.debug("startMasterNode");
+        ConnectionFactory.createMasterServer(_jobContext,_clusterType,_masterHostName,_masterPortNumber);
+    }
+
+    public String getMasterHostName(){
+        return _masterHostName;
+    }
+
+    public int getMasterPortNumber(){
+        return _masterPortNumber;
     }
 
     private void readMasterServerInfo() throws IOException {
-        _masterServerProperties = new Properties();
+        LOGGER.debug("reading master properties....");
+        Properties _masterServerProperties = new Properties();
         try (InputStream in = getClass().getResourceAsStream("master.properties"); ) {
             _masterServerProperties.load(in);
+            String masterServerInfoString = null;
+            for(Object keys : _masterServerProperties.keySet()){
+                masterServerInfoString = (String)_masterServerProperties.get(keys);
+                String[] values = masterServerInfoString.split(":");
+                _masterHostName = values[0];
+                _masterPortNumber = Integer.parseInt(values[1]);
+            }
         }
     }
     private void readWorkerServerInfo() throws IOException {
