@@ -1,7 +1,5 @@
 package LeetCode.misc;
 
-import de.flapdoodle.embed.process.collections.Collections;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,10 +59,10 @@ public class ZigzagIterator {
     }
 
     public static void main(String[] args) {
-        List<Integer> v1 = Collections.newArrayList();
-        List<Integer> v2 = Collections.newArrayList(1);
-        ZigzagIterator it = new ZigzagIterator(v1,v2);
-        System.out.println(it.next());
-        System.out.println(it.next());
+//        List<Integer> v1 = Collections.newArrayList();
+//        List<Integer> v2 = Collections.newArrayList(1);
+//        ZigzagIterator it = new ZigzagIterator(v1,v2);
+//        System.out.println(it.next());
+//        System.out.println(it.next());
     }
 }
