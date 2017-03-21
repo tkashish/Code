@@ -1,5 +1,7 @@
 package LeetCode.DynamicPrograming;
 
+import java.util.Arrays;
+
 /**
  * Created by kashishtayal on 11/21/16.
  */
@@ -55,11 +57,26 @@ public class BestTimeToBuyAndSellStockIII {
     }
     public static void main(String[] args) {
         BestTimeToBuyAndSellStockIII best = new BestTimeToBuyAndSellStockIII();
-//        System.out.println(best.maxProfit(new int[]{9,7,6,4,2}));
-//        System.out.println(best.maxProfit(new int[]{1,2,3,4,5,2,3}));
-//        System.out.println(best.maxProfit(new int[]{}));
-//        System.out.println(best.maxProfit(new int[]{1}));
-//        System.out.println(best.maxProfit(new int[]{1,2}));
-        System.out.println(best.maxProfit(new int[]{1,2,3}));
+        System.out.println(maxProfitI(2,new int[]{9,7,6,4,2}));
+        System.out.println(maxProfitI(2,new int[]{1,2,3,4,5,2,3}));
+        System.out.println(maxProfitI(2,new int[]{}));
+        System.out.println(maxProfitI(2,new int[]{1}));
+        System.out.println(maxProfitI(2,new int[]{1,2}));
+        System.out.println(maxProfitI(2,new int[]{1,2,3}));
+    }
+    private static int maxProfitI(int k, int[] prices){
+        int[] buyMax = new int[k+1];
+        Arrays.fill(buyMax,Integer.MIN_VALUE);
+        buyMax[0] = 0;
+        int[] sellMax = new int[k+1];
+        int max = 0;
+        for(int i = 0; i < prices.length; i++){
+            for(int j = 1; j < k+1; j++){
+                sellMax[j] = Math.max(buyMax[j]+prices[i], sellMax[j]);
+                buyMax[j] = Math.max(buyMax[j], sellMax[j-1]-prices[i]);
+                max = Math.max(max,Math.max(sellMax[j],buyMax[j]));
+            }
+        }
+        return max;
     }
 }
